@@ -438,10 +438,150 @@ function getTextureDrawer(block: BlockType, face: BlockFace): TextureDrawer {
     case BlockType.WATER:
       return (ctx) => drawWater(ctx);
 
+    case BlockType.DIAMOND_PICKAXE:
+      return (ctx) => drawPickaxe(ctx);
+
+    case BlockType.DIAMOND_SWORD:
+      return (ctx) => drawSword(ctx);
+
+    case BlockType.DIAMOND_SHOVEL:
+      return (ctx) => drawShovel(ctx);
+
+    case BlockType.DIAMOND_AXE:
+      return (ctx) => drawAxe(ctx);
+
+    case BlockType.APPLE:
+      return (ctx) => drawApple(ctx);
+
+    case BlockType.BREAD:
+      return (ctx) => drawBread(ctx);
+
+    case BlockType.SNIPER_RIFLE:
+      return (ctx) => drawSniper(ctx);
+
+    case BlockType.SNIPER_AMMO:
+      return (ctx) => drawSniperAmmo(ctx);
+
     default:
       return (ctx) => drawStone(ctx);
   }
 }
+
+function drawPickaxe(ctx: CanvasRenderingContext2D) {
+  ctx.clearRect(0, 0, 16, 16);
+  ctx.fillStyle = '#6e4b23';
+  for (let i = 2; i <= 9; i++) ctx.fillRect(i, 15 - i, 1, 1);
+  ctx.fillStyle = '#4ce3d8';
+  const head = [[8, 4], [9, 3], [10, 2], [11, 2], [12, 3], [13, 4], [14, 6], [10, 4], [11, 5]];
+  for (const [x, y] of head) ctx.fillRect(x, y, 1, 1);
+  ctx.fillStyle = '#bdf6f2';
+  ctx.fillRect(10, 2, 2, 1);
+}
+
+function drawSword(ctx: CanvasRenderingContext2D) {
+  ctx.clearRect(0, 0, 16, 16);
+  ctx.fillStyle = '#6e4b23';
+  ctx.fillRect(2, 13, 2, 2);
+  ctx.fillStyle = '#3a2714';
+  ctx.fillRect(3, 11, 3, 1);
+  ctx.fillRect(2, 12, 1, 3);
+  ctx.fillStyle = '#4ce3d8';
+  for (let i = 4; i <= 12; i++) ctx.fillRect(i, 15 - i, 2, 1);
+  ctx.fillRect(13, 2, 1, 1);
+  ctx.fillStyle = '#bdf6f2';
+  for (let i = 5; i <= 11; i++) ctx.fillRect(i, 15 - i, 1, 1);
+}
+
+function drawShovel(ctx: CanvasRenderingContext2D) {
+  ctx.clearRect(0, 0, 16, 16);
+  ctx.fillStyle = '#6e4b23';
+  for (let i = 2; i <= 10; i++) ctx.fillRect(i, 15 - i, 1, 1);
+  ctx.fillStyle = '#4ce3d8';
+  const spade = [[11, 4], [12, 3], [13, 2], [12, 4], [11, 5], [13, 3]];
+  for (const [x, y] of spade) ctx.fillRect(x, y, 1, 1);
+  ctx.fillStyle = '#bdf6f2';
+  ctx.fillRect(12, 3, 1, 1);
+}
+
+function drawAxe(ctx: CanvasRenderingContext2D) {
+  ctx.clearRect(0, 0, 16, 16);
+  ctx.fillStyle = '#6e4b23';
+  for (let i = 2; i <= 11; i++) ctx.fillRect(i, 15 - i, 1, 1);
+  ctx.fillStyle = '#4ce3d8';
+  const axeHead = [[9, 3], [10, 2], [11, 2], [12, 3], [11, 4], [10, 4], [9, 5], [8, 5]];
+  for (const [x, y] of axeHead) ctx.fillRect(x, y, 1, 1);
+  ctx.fillStyle = '#bdf6f2';
+  ctx.fillRect(10, 2, 2, 1);
+}
+
+function drawApple(ctx: CanvasRenderingContext2D) {
+  ctx.clearRect(0, 0, 16, 16);
+  ctx.fillStyle = '#d62828';
+  ctx.fillRect(5, 5, 6, 8);
+  ctx.fillRect(4, 6, 8, 6);
+  ctx.fillStyle = '#f77f00';
+  ctx.fillRect(5, 6, 2, 2);
+  ctx.fillStyle = '#6e4b23';
+  ctx.fillRect(7, 3, 1, 3);
+  ctx.fillStyle = '#55a630';
+  ctx.fillRect(8, 3, 2, 1);
+}
+
+function drawBread(ctx: CanvasRenderingContext2D) {
+  ctx.clearRect(0, 0, 16, 16);
+  ctx.fillStyle = '#b08953';
+  ctx.fillRect(3, 7, 10, 5);
+  ctx.fillRect(4, 6, 8, 7);
+  ctx.fillStyle = '#7f5539';
+  ctx.fillRect(5, 7, 1, 4);
+  ctx.fillRect(8, 7, 1, 4);
+  ctx.fillRect(11, 7, 1, 4);
+}
+
+function drawSniper(ctx: CanvasRenderingContext2D) {
+  ctx.clearRect(0, 0, 16, 16);
+  // Stock (wooden/dark composite)
+  ctx.fillStyle = '#4a3728';
+  ctx.fillRect(1, 11, 4, 3);
+  ctx.fillRect(3, 10, 3, 2);
+  // Receiver & Action
+  ctx.fillStyle = '#22252a';
+  ctx.fillRect(5, 9, 4, 3);
+  // Bolt handle
+  ctx.fillStyle = '#7a8288';
+  ctx.fillRect(6, 8, 2, 1);
+  // Long barrel
+  ctx.fillStyle = '#181a1d';
+  ctx.fillRect(9, 9, 6, 2);
+  // Muzzle brake
+  ctx.fillStyle = '#0f1113';
+  ctx.fillRect(14, 8, 2, 3);
+  // Scope mount & optic cylinder
+  ctx.fillStyle = '#111315';
+  ctx.fillRect(6, 6, 5, 2);
+  ctx.fillStyle = '#38bdf8'; // scope lens glass reflection
+  ctx.fillRect(10, 6, 1, 2);
+  // Bipod legs
+  ctx.fillStyle = '#4b5563';
+  ctx.fillRect(12, 11, 1, 3);
+  ctx.fillRect(14, 11, 1, 3);
+}
+
+function drawSniperAmmo(ctx: CanvasRenderingContext2D) {
+  ctx.clearRect(0, 0, 16, 16);
+  // Brass cartridge case
+  ctx.fillStyle = '#eab308';
+  ctx.fillRect(4, 7, 7, 4);
+  ctx.fillRect(2, 8, 2, 2);
+  // Bullet tip (copper/steel jacket)
+  ctx.fillStyle = '#c2410c';
+  ctx.fillRect(11, 8, 3, 2);
+  ctx.fillRect(14, 8, 1, 1);
+  // Highlight reflection
+  ctx.fillStyle = '#fef08a';
+  ctx.fillRect(4, 7, 7, 1);
+}
+
 
 // Cache textures for Three.js
 const textureCache = new Map<string, THREE.CanvasTexture>();

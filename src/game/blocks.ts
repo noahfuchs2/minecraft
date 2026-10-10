@@ -25,6 +25,16 @@ export enum BlockType {
   YELLOW_WOOL = 23,
   WHITE_WOOL = 24,
   WATER = 25,
+
+  // Tools & Items
+  SNIPER_RIFLE = 99,
+  DIAMOND_PICKAXE = 100,
+  DIAMOND_SWORD = 101,
+  DIAMOND_SHOVEL = 102,
+  DIAMOND_AXE = 103,
+  APPLE = 104,
+  BREAD = 105,
+  SNIPER_AMMO = 106,
 }
 
 export type SoundType = 'grass' | 'dirt' | 'stone' | 'wood' | 'sand' | 'glass' | 'wool';
@@ -33,16 +43,19 @@ export interface BlockDefinition {
   id: BlockType;
   nameDe: string;
   nameEn: string;
-  category: 'building' | 'natural' | 'ores' | 'utility';
+  category: 'building' | 'natural' | 'ores' | 'utility' | 'tools' | 'food';
   sound: SoundType;
   transparent?: boolean;
   semiTransparent?: boolean;
   lightLevel?: number; // 0 to 15
-  hardness: number; // break time in seconds (in survival)
+  hardness: number; // break time in seconds by bare hand in survival
+  bestTool?: 'pickaxe' | 'shovel' | 'axe' | 'sword';
   color: string; // fallback or average color
+  isItem?: boolean; // not placeable as a block
+  foodValue?: number; // food points restored if edible
 }
 
-export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
+export const BLOCK_DEFINITIONS: Record<number, BlockDefinition> = {
   [BlockType.AIR]: {
     id: BlockType.AIR,
     nameDe: 'Luft',
@@ -60,6 +73,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'natural',
     sound: 'grass',
     hardness: 0.6,
+    bestTool: 'shovel',
     color: '#5b8f3c',
   },
   [BlockType.DIRT]: {
@@ -69,6 +83,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'natural',
     sound: 'dirt',
     hardness: 0.5,
+    bestTool: 'shovel',
     color: '#866043',
   },
   [BlockType.STONE]: {
@@ -78,6 +93,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'building',
     sound: 'stone',
     hardness: 1.5,
+    bestTool: 'pickaxe',
     color: '#7a7a7a',
   },
   [BlockType.COBBLESTONE]: {
@@ -87,6 +103,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'building',
     sound: 'stone',
     hardness: 2.0,
+    bestTool: 'pickaxe',
     color: '#656565',
   },
   [BlockType.OAK_PLANKS]: {
@@ -96,6 +113,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'building',
     sound: 'wood',
     hardness: 1.2,
+    bestTool: 'axe',
     color: '#a07d4f',
   },
   [BlockType.OAK_LOG]: {
@@ -104,7 +122,8 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     nameEn: 'Oak Log',
     category: 'natural',
     sound: 'wood',
-    hardness: 1.4,
+    hardness: 1.5,
+    bestTool: 'axe',
     color: '#6a5132',
   },
   [BlockType.OAK_LEAVES]: {
@@ -114,7 +133,8 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'natural',
     sound: 'grass',
     semiTransparent: true,
-    hardness: 0.2,
+    hardness: 0.25,
+    bestTool: 'sword',
     color: '#386927',
   },
   [BlockType.GLASS]: {
@@ -134,6 +154,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'building',
     sound: 'stone',
     hardness: 2.0,
+    bestTool: 'pickaxe',
     color: '#9c4c3b',
   },
   [BlockType.SAND]: {
@@ -143,6 +164,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'natural',
     sound: 'sand',
     hardness: 0.5,
+    bestTool: 'shovel',
     color: '#d9cd9b',
   },
   [BlockType.DIAMOND_ORE]: {
@@ -152,6 +174,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'ores',
     sound: 'stone',
     hardness: 3.0,
+    bestTool: 'pickaxe',
     color: '#55e3dc',
   },
   [BlockType.GOLD_ORE]: {
@@ -161,6 +184,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'ores',
     sound: 'stone',
     hardness: 2.5,
+    bestTool: 'pickaxe',
     color: '#fcee4c',
   },
   [BlockType.IRON_ORE]: {
@@ -170,6 +194,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'ores',
     sound: 'stone',
     hardness: 2.2,
+    bestTool: 'pickaxe',
     color: '#d8af93',
   },
   [BlockType.COAL_ORE]: {
@@ -179,6 +204,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'ores',
     sound: 'stone',
     hardness: 2.0,
+    bestTool: 'pickaxe',
     color: '#333333',
   },
   [BlockType.BEDROCK]: {
@@ -187,7 +213,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     nameEn: 'Bedrock',
     category: 'building',
     sound: 'stone',
-    hardness: 9999, // Unbreakable
+    hardness: 99999, // Unbreakable
     color: '#2a2a2a',
   },
   [BlockType.BOOKSHELF]: {
@@ -197,6 +223,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'utility',
     sound: 'wood',
     hardness: 1.5,
+    bestTool: 'axe',
     color: '#a07d4f',
   },
   [BlockType.TNT]: {
@@ -225,6 +252,7 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     category: 'utility',
     sound: 'wood',
     hardness: 1.5,
+    bestTool: 'axe',
     color: '#8b6338',
   },
   [BlockType.RED_WOOL]: {
@@ -283,10 +311,106 @@ export const BLOCK_DEFINITIONS: Record<BlockType, BlockDefinition> = {
     hardness: 0.1,
     color: '#3768c8',
   },
+
+  // Tools
+  [BlockType.DIAMOND_PICKAXE]: {
+    id: BlockType.DIAMOND_PICKAXE,
+    nameDe: 'Diamantspitzhacke',
+    nameEn: 'Diamond Pickaxe',
+    category: 'tools',
+    sound: 'stone',
+    hardness: 0,
+    color: '#4ce3d8',
+    isItem: true,
+  },
+  [BlockType.DIAMOND_SWORD]: {
+    id: BlockType.DIAMOND_SWORD,
+    nameDe: 'Diamantschwert',
+    nameEn: 'Diamond Sword',
+    category: 'tools',
+    sound: 'stone',
+    hardness: 0,
+    color: '#4ce3d8',
+    isItem: true,
+  },
+  [BlockType.DIAMOND_SHOVEL]: {
+    id: BlockType.DIAMOND_SHOVEL,
+    nameDe: 'Diamantschaufel',
+    nameEn: 'Diamond Shovel',
+    category: 'tools',
+    sound: 'stone',
+    hardness: 0,
+    color: '#4ce3d8',
+    isItem: true,
+  },
+  [BlockType.DIAMOND_AXE]: {
+    id: BlockType.DIAMOND_AXE,
+    nameDe: 'Diamantaxt',
+    nameEn: 'Diamond Axe',
+    category: 'tools',
+    sound: 'stone',
+    hardness: 0,
+    color: '#4ce3d8',
+    isItem: true,
+  },
+
+  // Food
+  [BlockType.APPLE]: {
+    id: BlockType.APPLE,
+    nameDe: 'Apfel',
+    nameEn: 'Apple',
+    category: 'food',
+    sound: 'grass',
+    hardness: 0,
+    color: '#d62828',
+    isItem: true,
+    foodValue: 4, // 2 hunger bars
+  },
+  [BlockType.BREAD]: {
+    id: BlockType.BREAD,
+    nameDe: 'Brot',
+    nameEn: 'Bread',
+    category: 'food',
+    sound: 'wood',
+    hardness: 0,
+    color: '#b08953',
+    isItem: true,
+    foodValue: 5, // 2.5 hunger bars
+  },
+  [BlockType.SNIPER_RIFLE]: {
+    id: BlockType.SNIPER_RIFLE,
+    nameDe: 'Voxel-Scharfschützengewehr .50',
+    nameEn: 'Sniper Rifle .50',
+    category: 'tools',
+    sound: 'stone',
+    hardness: 0,
+    color: '#2a2f35',
+    isItem: true,
+  },
+  [BlockType.SNIPER_AMMO]: {
+    id: BlockType.SNIPER_AMMO,
+    nameDe: 'Scharfschützen-Munition (.50 BMG)',
+    nameEn: 'Sniper Ammo',
+    category: 'tools',
+    sound: 'stone',
+    hardness: 0,
+    color: '#d4af37',
+    isItem: true,
+  },
 };
 
-// Available blocks for inventory & creative selection (excluding AIR)
 export const PLAYABLE_BLOCKS: BlockType[] = [
+  // Sniper & Weapons first
+  BlockType.SNIPER_RIFLE,
+  BlockType.SNIPER_AMMO,
+  BlockType.DIAMOND_SWORD,
+  BlockType.DIAMOND_PICKAXE,
+  BlockType.DIAMOND_SHOVEL,
+  BlockType.DIAMOND_AXE,
+  BlockType.APPLE,
+  BlockType.BREAD,
+
+  // Blocks
   BlockType.GRASS,
   BlockType.DIRT,
   BlockType.STONE,

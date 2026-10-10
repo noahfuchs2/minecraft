@@ -9,10 +9,14 @@ interface PauseMenuProps {
   onResetWorld: (seed?: number) => void;
   isFlying: boolean;
   onToggleFlight: () => void;
+  gameMode: 'survival' | 'creative';
+  onToggleGameMode: () => void;
   fov: number;
   onChangeFov: (fov: number) => void;
   daySpeed: number; // in seconds
   onChangeDaySpeed: (speed: number) => void;
+  renderRadius: number;
+  onChangeRenderRadius: (radius: number) => void;
 }
 
 export const PauseMenu: React.FC<PauseMenuProps> = ({
@@ -22,10 +26,14 @@ export const PauseMenu: React.FC<PauseMenuProps> = ({
   onResetWorld,
   isFlying,
   onToggleFlight,
+  gameMode,
+  onToggleGameMode,
   fov,
   onChangeFov,
   daySpeed,
   onChangeDaySpeed,
+  renderRadius,
+  onChangeRenderRadius,
 }) => {
   const [tab, setTab] = useState<'menu' | 'settings' | 'controls'>('menu');
   const [saveToast, setSaveToast] = useState(false);
@@ -71,6 +79,19 @@ export const PauseMenu: React.FC<PauseMenuProps> = ({
             >
               <Play className="w-4 h-4 fill-white" />
               <span>Zurück zum Spiel</span>
+            </button>
+
+            <button
+              onClick={() => {
+                soundManager.playClick();
+                onToggleGameMode();
+              }}
+              className="mc-button w-full py-2 text-xs font-minecraft cursor-pointer flex items-center justify-center gap-2"
+            >
+              <span>Spielmodus:</span>
+              <span className={gameMode === 'creative' ? 'text-purple-300 font-bold' : 'text-emerald-300 font-bold'}>
+                {gameMode === 'creative' ? 'Kreativ' : 'Überleben'}
+              </span>
             </button>
 
             <button
@@ -191,6 +212,22 @@ export const PauseMenu: React.FC<PauseMenuProps> = ({
               />
             </div>
 
+            {/* Render Distance (Sichtweite) */}
+            <div className="flex flex-col gap-1">
+              <div className="flex justify-between text-xs font-minecraft text-white/90">
+                <span>Sichtweite (Chunks):</span>
+                <span>{renderRadius * 2 + 1}x{renderRadius * 2 + 1} Chunks ({renderRadius})</span>
+              </div>
+              <input
+                type="range"
+                min="2"
+                max="5"
+                value={renderRadius}
+                onChange={(e) => onChangeRenderRadius(Number(e.target.value))}
+                className="w-full accent-emerald-500 cursor-pointer"
+              />
+            </div>
+
             <button
               onClick={() => {
                 soundManager.playClick();
@@ -220,6 +257,12 @@ export const PauseMenu: React.FC<PauseMenuProps> = ({
 
               <span className="text-amber-300">Rechtsklick</span>
               <span className="text-white/90">Block bauen</span>
+
+              <span className="text-amber-300">W (Doppelt) / Strg</span>
+              <span className="text-white/90">Sprinten</span>
+
+              <span className="text-amber-300">Im Wasser</span>
+              <span className="text-white/90">Leertaste = Schwimmen / Shift = Tauchen</span>
 
               <span className="text-amber-300">Leertaste</span>
               <span className="text-white/90">Springen</span>

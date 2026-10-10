@@ -19,7 +19,7 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
   hotbar,
   onSetHotbarSlot,
 }) => {
-  const [activeCategory, setActiveCategory] = useState<'all' | 'building' | 'natural' | 'ores' | 'utility'>('all');
+  const [activeCategory, setActiveCategory] = useState<'all' | 'tools' | 'building' | 'natural' | 'ores' | 'utility'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [hoveredBlock, setHoveredBlock] = useState<BlockType | null>(null);
 
@@ -99,6 +99,7 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
           <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0">
             {[
               { id: 'all', label: 'Alle' },
+              { id: 'tools', label: 'Waffen' },
               { id: 'building', label: 'Bauen' },
               { id: 'natural', label: 'Natur' },
               { id: 'ores', label: 'Erze' },
