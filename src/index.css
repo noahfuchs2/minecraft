@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-minecraft {
+    font-family: 'Press Start 2P', monospace;
+  }
+  
+  .pixelated {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+
+  /* Authentic Minecraft GUI Button styling */
+  .mc-button {
+    background-color: #727272;
+    border-top: 2px solid #a8a8a8;
+    border-left: 2px solid #a8a8a8;
+    border-bottom: 2px solid #3c3c3c;
+    border-right: 2px solid #3c3c3c;
+    color: #e0e0e0;
+    text-shadow: 2px 2px #202020;
+    transition: background-color 0.1s ease;
+  }
+
+  .mc-button:hover:not(:disabled) {
+    background-color: #8c8c8c;
+    border-top-color: #c0c0c0;
+    border-left-color: #c0c0c0;
+    border-bottom-color: #4a4a4a;
+    border-right-color: #4a4a4a;
+    color: #ffffff;
+  }
+
+  .mc-button:active:not(:disabled) {
+    background-color: #555555;
+    border-top: 2px solid #282828;
+    border-left: 2px solid #282828;
+    border-bottom: 2px solid #888888;
+    border-right: 2px solid #888888;
+  }
+
+  .mc-button-green {
+    background-color: #468132;
+    border-top: 2px solid #71b858;
+    border-left: 2px solid #71b858;
+    border-bottom: 2px solid #234816;
+    border-right: 2px solid #234816;
+    color: #ffffff;
+    text-shadow: 2px 2px #18330e;
+  }
+
+  .mc-button-green:hover:not(:disabled) {
+    background-color: #52963b;
+    border-top-color: #8cd96f;
+    border-left-color: #8cd96f;
+  }
+
+  /* Minecraft slot styling */
+  .mc-slot {
+    background-color: #8b8b8b;
+    border-top: 2px solid #373737;
+    border-left: 2px solid #373737;
+    border-bottom: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+  }
+
+  .mc-slot-active {
+    outline: 2px solid #ffffff;
+    box-shadow: 0 0 0 2px #000000;
+  }
+
+  /* Minecraft window styling */
+  .mc-window {
+    background-color: #c6c6c6;
+    border-top: 3px solid #ffffff;
+    border-left: 3px solid #ffffff;
+    border-bottom: 3px solid #555555;
+    border-right: 3px solid #555555;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+  }
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}

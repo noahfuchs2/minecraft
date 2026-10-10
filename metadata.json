@@ -1,0 +1,6 @@
+{
+  "name": "MineCraft Web - Voxel Builder",
+  "description": "Eine einfachere und detailgetreue Version von Minecraft im Browser. Baue und zerstöre Blöcke, erkunde prozedurale Welten mit Tag-Nacht-Zyklus, Hotbar, Inventar und Pixel-Texturen.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
